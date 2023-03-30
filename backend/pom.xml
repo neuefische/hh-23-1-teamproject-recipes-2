@@ -16,7 +16,7 @@
     <properties>
         <sonar.organization>neuefische</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <java.version>20</java.version>
+        <java.version>19</java.version>
     </properties>
     <dependencies>
         <dependency>
