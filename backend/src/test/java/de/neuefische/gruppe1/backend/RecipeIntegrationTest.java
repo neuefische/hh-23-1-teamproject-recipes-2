@@ -25,9 +25,9 @@ class RecipeIntegrationTest {
     ObjectMapper objectMapper;
 
 
-    @Test                                                   //ggf. auf /api/recipe ändern
+    @Test
     void getAll_ShouldReturnAllRecipes() throws Exception {
-        mockMvc.perform(get("http://localhost:8080/api/recipe"))
+        mockMvc.perform(get("/api/recipe"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
