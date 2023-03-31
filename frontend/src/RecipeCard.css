@@ -1,0 +1,7 @@
+.recipe-card{
+    background-color: rgba(128, 128, 128, 0.5);
+    border: 1px black solid;
+    margin: 12px;
+    border-radius: 12px;
+
+}
