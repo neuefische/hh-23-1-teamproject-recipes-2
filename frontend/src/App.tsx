@@ -23,10 +23,7 @@ function App() {
         <div className="App">
             <Header/>
             <RecipeGallery recipes={recipes}/>
-
-
         </div>
     );
 }
-
 export default App;
