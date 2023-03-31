@@ -7,14 +7,11 @@ import axios from "axios";
 import {Recipe} from "./Recipe";
 
 function App() {
-    //const{recipe: Recipe[]} = useRe
     const[recipes, setRecipes] = useState<Recipe[]>([])
-
 
     useEffect(() => {
         loadAllRecipes()
     }, [])
-
 
     function loadAllRecipes() {
         axios.get("/api/recipe")

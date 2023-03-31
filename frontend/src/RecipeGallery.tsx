@@ -11,12 +11,10 @@ export default function RecipeGallery(props : RecipeGalleryProps){
     return (
         <div className = "recipe-gallery">
 
-            {props.recipes.map((card)=>{
-                return (<RecipeCard key ={card.id}
-                    recipe={card}/>)
-
+            {props.recipes.map((recipe)=>{
+                return (<RecipeCard key ={recipe.id}
+                    recipe={recipe}/>)
             })}
         </div>
     )
-
 }

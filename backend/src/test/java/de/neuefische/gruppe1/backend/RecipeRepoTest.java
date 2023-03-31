@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecipeRepoTest {
 
     @Test
-    void getAll_ShouldReturnTrueWhenEmpty() {
+    void getAll_ShouldReturnEmptyListWhenEmpty() {
         //GIVEN
         RecipeRepo recipeRepo = new RecipeRepo();
 
