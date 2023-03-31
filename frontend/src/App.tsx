@@ -10,11 +10,9 @@ function App() {
     //const{recipe: Recipe[]} = useRe
     const[recipes, setRecipes] = useState<Recipe[]>([])
 
-
     useEffect(() => {
         loadAllRecipes()
     }, [])
-
 
     function loadAllRecipes() {
         axios.get("/api/recipes")
@@ -26,10 +24,7 @@ function App() {
         <div className="App">
             <Header/>
             <RecipeGallery recipes={recipes}/>
-
-
         </div>
     );
 }
-
 export default App;

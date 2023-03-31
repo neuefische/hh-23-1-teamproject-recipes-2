@@ -24,7 +24,6 @@ class RecipeIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-
     @Test
     void getAll_ShouldReturnAllRecipes() throws Exception {
         mockMvc.perform(get("/api/recipe"))

@@ -6,7 +6,6 @@ import RecipeCard from "./RecipeCard";
 type RecipeGalleryProps = {
     recipes: Recipe[],
 }
-
 export default function RecipeGallery(props : RecipeGalleryProps){
     return (
         <div className = "recipe-gallery">
@@ -18,5 +17,4 @@ export default function RecipeGallery(props : RecipeGalleryProps){
             })}
         </div>
     )
-
 }
