@@ -14,7 +14,7 @@ public class RecipeService {
     RecipeService(RecipeRepo recipeRepo) {
         this.recipeRepo = recipeRepo;
     }
-    List<Recipe> getAll() {
+    public List<Recipe> getAll() {
         return recipeRepo.getAll();
 
     }
