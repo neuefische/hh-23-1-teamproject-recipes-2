@@ -17,7 +17,7 @@ function App() {
 
 
     function loadAllRecipes() {
-        axios.get("/api/recipe")
+        axios.get("/api/recipes")
             .then((getAllRecipesResponse) => {setRecipes(getAllRecipesResponse.data)})
             .catch((error) =>{console.error(error)})
     }
