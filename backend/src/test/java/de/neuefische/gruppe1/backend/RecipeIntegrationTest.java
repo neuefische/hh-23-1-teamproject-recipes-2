@@ -26,7 +26,7 @@ class RecipeIntegrationTest {
 
     @Test
     void getAll_ShouldReturnAllRecipes() throws Exception {
-        mockMvc.perform(get("/api/recipe"))
+        mockMvc.perform(get("/api/recipes"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
