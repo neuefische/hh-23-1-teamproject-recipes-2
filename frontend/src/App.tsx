@@ -5,10 +5,16 @@ import Header from "./Header";
 import RecipeGallery from "./RecipeGallery";
 import axios from "axios";
 import {Recipe} from "./Recipe";
+import ActionBar from "./ActionBar";
 
 function App() {
     //const{recipe: Recipe[]} = useRe
     const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [recipeAdded, setAddRecipe] = useState<string>("")
+
+    function onChange(value: string) {
+        setAddRecipe(value)
+    }
 
     useEffect(() => {
         loadAllRecipes()
@@ -21,7 +27,7 @@ function App() {
     }
 
     function addRecipe() {
-        axios.post("/api/recipes", {id:"", name:""})
+        axios.post("/api/recipes", {id:"", name:"recipeAdded"})
             .then((response) =>{
                 setAddRecipe(response.data)
             })
@@ -33,6 +39,7 @@ function App() {
     return (
         <div className="App">
             <Header/>
+            <ActionBar inputText={recipeAdded} onChange={onChange} addRecipe={addRecipe}/>
             <RecipeGallery recipes={recipes}/>
         </div>
     );
