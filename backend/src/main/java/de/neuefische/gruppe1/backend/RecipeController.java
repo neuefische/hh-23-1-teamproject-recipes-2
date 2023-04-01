@@ -1,9 +1,7 @@
 package de.neuefische.gruppe1.backend;
 
 import de.neuefische.gruppe1.backend.model.Recipe;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +17,9 @@ public class RecipeController {
     @GetMapping
     List<Recipe> getAll(){
         return recipeService.getAll();
+    }
+    @PostMapping
+    Recipe addRecipe(@RequestBody Recipe recipeToAdd) {
+        return recipeService.add(recipeToAdd);
     }
 }
