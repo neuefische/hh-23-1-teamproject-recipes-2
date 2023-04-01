@@ -9,7 +9,7 @@ export default function RecipeGallery(props : RecipeGalleryProps){
     return (
         <div className = "recipe-gallery">
             {props.recipes.map((card)=>{
-                return (<RecipeCard key ={card.id}
+                return (<RecipeCard key={card.id}
                     recipe={card}/>)
             })}
         </div>
