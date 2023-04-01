@@ -27,7 +27,7 @@ function App() {
     }
 
     function addRecipe() {
-        axios.post("/api/recipes", {id:"", name:"recipeAdded"})
+        axios.post("/api/recipes", {id:"", name: recipeAdded})
             .then((response) =>{
                 setAddRecipe(response.data)
             })
