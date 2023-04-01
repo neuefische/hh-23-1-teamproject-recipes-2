@@ -8,7 +8,7 @@ import {Recipe} from "./Recipe";
 
 function App() {
     //const{recipe: Recipe[]} = useRe
-    const[recipes, setRecipes] = useState<Recipe[]>([])
+    const [recipes, setRecipes] = useState<Recipe[]>([])
 
     useEffect(() => {
         loadAllRecipes()
@@ -18,6 +18,16 @@ function App() {
         axios.get("/api/recipes")
             .then((getAllRecipesResponse) => {setRecipes(getAllRecipesResponse.data)})
             .catch((error) =>{console.error(error)})
+    }
+
+    function addRecipe() {
+        axios.post("/api/recipes", {id:"", name:""})
+            .then((response) =>{
+                setAddRecipe(response.data)
+            })
+            .then(() => loadAllRecipes())
+            .then(() => setAddRecipe(""))
+            .catch(() => console.error("post on /api/recipes not successful"))
     }
 
     return (
