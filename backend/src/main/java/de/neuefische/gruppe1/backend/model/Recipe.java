@@ -5,4 +5,7 @@ public record Recipe(
         String name
 ) {
 
+    public Recipe withId(String id) {
+        return new Recipe(id, name);
+    }
 }
