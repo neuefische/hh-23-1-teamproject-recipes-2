@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from "./Header";
 import RecipeGallery from "./RecipeGallery";
@@ -27,7 +26,7 @@ function App() {
     }
 
     function addRecipe() {
-        axios.post("/api/recipes", {id:"", name: recipeAdded})
+        axios.post("/api/recipes", {name: recipeAdded})
             .then((response) =>{
                 setAddRecipe(response.data)
             })
