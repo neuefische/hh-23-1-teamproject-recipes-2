@@ -33,9 +33,10 @@ class RecipeRepoTest {
 
         //THEN
         List<Recipe> expected = new ArrayList<>();
-        expected.add(new Recipe("1", "Pizza"));
-        expected.add(new Recipe("2", "Gurkensalat"));
+        expected.add(new Recipe("1", "Pizza", "How To Make Pizza"));
+        expected.add(new Recipe("2", "Gurkensalat", "How to Make Gurkensalat"));
 
         assertNotEquals(expected, actual);
     }
+    //TODO for tuesday Test for add Methode + Test for Service class get and add Methode
 }
