@@ -18,9 +18,9 @@ public class RecipeService {
         return recipeRepo.getAll();
 
     }
-    public Recipe addRecipe(Recipe recipeAdd) {
+    public Recipe addRecipe(Recipe addRecipe) {
         String id = UUID.randomUUID().toString();
-        Recipe recipeToAdd = recipeAdd.withId(id);
-        return recipeRepo.addRecipe(recipeToAdd);
+        Recipe recipeAdd = addRecipe.withId(id);
+        return recipeRepo.addRecipe(recipeAdd);
     }
 }
