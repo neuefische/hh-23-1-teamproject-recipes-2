@@ -17,7 +17,7 @@ public class RecipeRepo {
         return new ArrayList<>(recipes.values());
     }
 
-    public Recipe add(Recipe recipeToAdd) {
+    public Recipe addRecipe(Recipe recipeToAdd) {
         recipes.put(recipeToAdd.id(), recipeToAdd);
         return recipeToAdd;
     }
