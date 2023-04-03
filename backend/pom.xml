@@ -37,6 +37,7 @@
     </dependencies>
 
     <build>
+        <finalName>recipeapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>

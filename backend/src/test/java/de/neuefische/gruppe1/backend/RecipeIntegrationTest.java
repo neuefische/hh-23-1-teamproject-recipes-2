@@ -16,10 +16,6 @@ class RecipeIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-
     @Test                                                   //ggf. auf /api/recipe ändern
     void getAll_ShouldReturnAllRecipes() throws Exception {
         mockMvc.perform(get("/api/recipes"))
