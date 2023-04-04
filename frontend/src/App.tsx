@@ -52,12 +52,12 @@ function App() {
                        element={<RecipeGallery recipes={recipes}/>}/>
                 <Route path="/recipes/add"
                        element={<AddRecipe addRecipe={addRecipe} />}/>
-            <ActionBar inputText={recipeAdded} onChange={onChange} addRecipe={addRecipe}/>
+
 
             </Routes>
         </div>
         </BrowserRouter>
     );
 }
-
+//<ActionBar inputText={recipeAdded} onChange={onChange} addRecipe={addRecipe}/>
 export default App;

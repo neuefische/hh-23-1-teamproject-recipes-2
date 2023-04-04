@@ -2,11 +2,10 @@ package de.neuefische.gruppe1.backend.model;
 
 public record Recipe(
         String id,
-        String name,
-        String description
+        String name
 ) {
 
     public Recipe withId(String id) {
-        return new Recipe(id, name, description);
+        return new Recipe(id, name);
     }
 }

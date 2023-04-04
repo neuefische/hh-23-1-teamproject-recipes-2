@@ -1,6 +1,6 @@
 import {NewRecipe} from "./Recipe";
 import {FormEvent, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 type AddRecipeProps = {
     addRecipe: (newRecipe: NewRecipe) => void
@@ -20,27 +20,19 @@ export default function AddRecipe(props: AddRecipeProps) {
         navigate('/recipes')
     }
 
+
     return (
         <div>
-        <form onSubmit={onSaveRecipe}>
-        <input value={name}
-        onChange={(event)}/>
-    <button>Save Recipe</button>
-</form>
-</div>
+            <form onSubmit={onSaveRecipe}>
+                <input type="text"
+                value={name}
+                       onChange={(event) => {
+                           setName(event.target.value)
+                       }}/>
+                <button>Save Recipe</button>
+            </form>
+        </div>
     )
 
 
-
 }
-
-// <div>
-//     <form onSubmit={onSaveRecipe}>
-//         <input type="text"
-//                value="name"/>
-//         <button type="submit">Create</button>
-//     </form>
-// </div>
-
-// onChange={(event) => {
-//     setName(event.target.value)
