@@ -5,6 +5,9 @@ import RecipeGallery from "./RecipeGallery";
 import axios from "axios";
 import {Recipe} from "./Recipe";
 import ActionBar from "./ActionBar";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import AddRecipe from "./AddRecipe";
+
 
 function App() {
     //const{recipe: Recipe[]} = useRe
@@ -21,13 +24,17 @@ function App() {
 
     function loadAllRecipes() {
         axios.get("/api/recipes")
-            .then((getAllRecipesResponse) => {setRecipes(getAllRecipesResponse.data)})
-            .catch((error) =>{console.error(error)})
+            .then((getAllRecipesResponse) => {
+                setRecipes(getAllRecipesResponse.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }
 
     function addRecipe() {
         axios.post("/api/recipes", {name: recipeAdded})
-            .then((response) =>{
+            .then((response) => {
                 setAddRecipe(response.data)
             })
             .then(() => loadAllRecipes())
@@ -36,11 +43,21 @@ function App() {
     }
 
     return (
+        <BrowserRouter>
         <div className="App">
             <Header/>
+            <Routes>
+                <Route element={<Navigate to="/recipes"/>}/>
+                <Route path="/recipes"
+                       element={<RecipeGallery recipes={recipes}/>}/>
+                <Route path="/recipes/add"
+                       element={<AddRecipe addRecipe={addRecipe} />}/>
             <ActionBar inputText={recipeAdded} onChange={onChange} addRecipe={addRecipe}/>
-            <RecipeGallery recipes={recipes}/>
+
+            </Routes>
         </div>
+        </BrowserRouter>
     );
 }
+
 export default App;
