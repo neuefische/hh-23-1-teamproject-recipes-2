@@ -8,8 +8,9 @@ type AddRecipeProps = {
 }
 
 export default function AddRecipe(props: AddRecipeProps) {
-    const [name, setName] = useState<string>("")
+    const [name, setName] = useState<string>('')
     const navigate = useNavigate()
+
 
     function onSaveRecipe(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
