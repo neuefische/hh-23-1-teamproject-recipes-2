@@ -2,6 +2,7 @@ import {NewRecipe} from "./Recipe";
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
+
 type AddRecipeProps = {
     addRecipe: (newRecipe: NewRecipe) => void
 }
