@@ -3,20 +3,20 @@ import './App.css';
 import Header from "./Header";
 import RecipeGallery from "./RecipeGallery";
 import axios from "axios";
-import {Recipe} from "./Recipe";
-import ActionBar from "./ActionBar";
+import {NewRecipe, Recipe} from "./Recipe";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AddRecipe from "./AddRecipe";
 
 
+
 function App() {
-    //const{recipe: Recipe[]} = useRe
+
     const [recipes, setRecipes] = useState<Recipe[]>([])
     const [recipeAdded, setAddRecipe] = useState<string>("")
 
-    function onChange(value: string) {
+    /*function onChange(value: string) {
         setAddRecipe(value)
-    }
+    }*/
 
     useEffect(() => {
         loadAllRecipes()
@@ -32,8 +32,8 @@ function App() {
             })
     }
 
-    function addRecipe() {
-        axios.post("/api/recipes", {name: recipeAdded})
+    function addRecipe(newRecipe: NewRecipe) {
+        axios.post("/api/recipes", newRecipe)
             .then((response) => {
                 setAddRecipe(response.data)
             })
