@@ -1,7 +1,9 @@
 package de.neuefische.gruppe1.backend.model;
 
+import org.springframework.data.annotation.Id;
+
 public record Recipe(
-        String id,
+        @Id String id,
         String name
 ) {
 

@@ -13,16 +13,18 @@ import java.util.List;
 public class RecipeController {
     private final RecipeService recipeService;
 
+
+    @GetMapping
+    public List<Recipe> getAll(){
+        return recipeService.getAll();
+    }
+    @PostMapping
+    public Recipe addRecipe(@RequestBody Recipe recipeToAdd) {
+        return recipeService.addRecipe(recipeToAdd);
+    }
+}
 /*    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }*/
 
-    @GetMapping
-    List<Recipe> getAll(){
-        return recipeService.getAll();
-    }
-    @PostMapping
-    Recipe addRecipe(@RequestBody Recipe recipeToAdd) {
-        return recipeService.addRecipe(recipeToAdd);
-    }
-}
+

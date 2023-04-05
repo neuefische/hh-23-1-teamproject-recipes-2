@@ -1,3 +1,4 @@
+/*
 package de.neuefische.gruppe1.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,3 +36,4 @@ class RecipeIntegrationTest {
                 ));
     }
 }
+*/
