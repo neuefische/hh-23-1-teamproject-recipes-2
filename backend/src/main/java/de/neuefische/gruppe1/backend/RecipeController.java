@@ -1,18 +1,21 @@
 package de.neuefische.gruppe1.backend;
 
 import de.neuefische.gruppe1.backend.model.Recipe;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/recipes")
 public class RecipeController {
     private final RecipeService recipeService;
 
-    public RecipeController(RecipeService recipeService) {
+/*    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-    }
+    }*/
 
     @GetMapping
     List<Recipe> getAll(){
