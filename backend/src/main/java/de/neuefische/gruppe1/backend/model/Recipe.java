@@ -1,12 +1,10 @@
 package de.neuefische.gruppe1.backend.model;
 
-public record Recipe(
-        String id,
-        String name,
-        String description
-) {
+import org.springframework.data.annotation.Id;
 
-    public Recipe withId(String id) {
-        return new Recipe(id, name, description);
-    }
+public record Recipe(
+        @Id
+        String id,
+        String name
+) {
 }

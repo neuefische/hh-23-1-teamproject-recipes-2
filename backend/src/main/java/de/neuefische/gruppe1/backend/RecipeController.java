@@ -1,24 +1,24 @@
 package de.neuefische.gruppe1.backend;
 
 import de.neuefische.gruppe1.backend.model.Recipe;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/recipes")
 public class RecipeController {
     private final RecipeService recipeService;
 
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
+    @GetMapping
+    public List<Recipe> getAll() {
+        return recipeService.getAll();
     }
 
-    @GetMapping
-    List<Recipe> getAll(){
-        return recipeService.getAll();
+    @PostMapping
+    public Recipe addRecipe(@RequestBody Recipe recipeToAdd) {
+        return recipeService.addRecipe(recipeToAdd);
     }
 }
