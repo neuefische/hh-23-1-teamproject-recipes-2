@@ -12,11 +12,9 @@ import java.util.List;
 public class RecipeService {
 
     private final RecipeRepoInterface recipeRepoInterface;
-
     public List<Recipe> getAll() {
         return recipeRepoInterface.findAll();
     }
-
     public Recipe addRecipe(Recipe recipe) {
         return recipeRepoInterface.save(recipe);
     }

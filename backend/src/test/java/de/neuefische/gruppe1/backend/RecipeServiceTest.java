@@ -2,14 +2,23 @@ package de.neuefische.gruppe1.backend;
 
 import de.neuefische.gruppe1.backend.model.Recipe;
 import de.neuefische.gruppe1.backend.model.RecipeRepoInterface;
+import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.beans.Beans;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 
@@ -19,41 +28,60 @@ import static org.mockito.Mockito.*;
 
 public class RecipeServiceTest {
 
-    private final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
+
+
+    private RecipeService recipeService;
+
+    @Mock
+    private RecipeRepoInterface recipeRepoInterfaceMock;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        recipeService = new RecipeService(recipeRepoInterfaceMock);
+    }
+    @Test
+    void testGetAll() {
+        Recipe recipe1 = new Recipe("1", "Pasta Carbonara");
+        Recipe recipe2 = new Recipe("2","Spaghetti Bolognese");
+        Recipe recipe3 = new Recipe("3", "Lasagne");
+
+        List<Recipe> expectedRecipes = Arrays.asList(recipe1, recipe2, recipe3);
+
+        when(recipeRepoInterfaceMock.findAll()).thenReturn(expectedRecipes);
+
+        List<Recipe> actualRecipes = recipeService.getAll();
+
+        Assertions.assertEquals(expectedRecipes.size(), actualRecipes.size());
+
+        for (int i = 0; i < expectedRecipes.size(); i++) {
+            Assertions.assertEquals(expectedRecipes.get(i), actualRecipes.get(i));
+        }
+
+        verify(recipeRepoInterfaceMock, times(1)).findAll();
+    }
+    @DirtiesContext
+
 
     @Test
-    void getAll_expectedEmptyList_WhenDataBaseIsEmpty(){
+    void getAll_expectedEmptyList_WhenDataBaseIsEmpty() {
         //GIVEN
+        final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
+        final RecipeService recipeService = new RecipeService(recipeRepoInterface);
+
         when(recipeRepoInterface.findAll())
                 .thenReturn(Collections.emptyList());
 
         //WHEN
-        List<Recipe> actual = recipeService.findAll();
-
+        List<Recipe> actual = recipeService.getAll();
+        List<Recipe> expected = new ArrayList<>();
         //THEN
         verify(recipeRepoInterface).findAll();
-        assertActual.isInstanceOf(List.class).isEmpty();
+        assertEquals(actual, expected);
 
     }
-
 }
 
-
-// Test Robin
-//    @Test
-//    void getAll_ShouldReturnTrueWhenEmpty() {
-//        // GIVEN
-//        RecipeService recipeService = new RecipeService(new MockRecipeRepo());
-//
-//        // WHEN
-//        List<Recipe> actual = recipeService.getAll();
-//
-//        // THEN
-//        List<Recipe> expected = new ArrayList<>();
-//        assertEquals(expected, actual);
-//    }
-
- 
 
 
 
