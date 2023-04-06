@@ -1,4 +1,3 @@
-/*
 package de.neuefische.gruppe1.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +21,6 @@ class RecipeIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
     @Test
     void getAll_ShouldReturnAllRecipes() throws Exception {
         mockMvc.perform(get("/api/recipes"))
@@ -36,4 +32,4 @@ class RecipeIntegrationTest {
                 ));
     }
 }
-*/
+
