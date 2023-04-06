@@ -15,7 +15,6 @@ public class RecipeService {
 
     public List<Recipe> getAll() {
         return recipeRepoInterface.findAll();
-
     }
 
     public Recipe addRecipe(Recipe recipe) {
