@@ -1,5 +1,5 @@
 import {Recipe} from "./Recipe";
-import  './RecipeCard.css'
+import './RecipeCard.css'
 
 type RecipeProps = {
     recipe: Recipe

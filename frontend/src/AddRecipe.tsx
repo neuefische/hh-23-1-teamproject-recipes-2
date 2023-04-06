@@ -2,7 +2,6 @@ import {NewRecipe} from "./Recipe";
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-
 type AddRecipeProps = {
     addRecipe: (newRecipe: NewRecipe) => void
 }
@@ -10,7 +9,6 @@ type AddRecipeProps = {
 export default function AddRecipe(props: AddRecipeProps) {
     const [name, setName] = useState<string>('')
     const navigate = useNavigate()
-
 
     function onSaveRecipe(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -22,12 +20,11 @@ export default function AddRecipe(props: AddRecipeProps) {
         navigate('/recipes')
     }
 
-
     return (
         <div>
             <form onSubmit={onSaveRecipe}>
                 <input type="text"
-                value={name}
+                       value={name}
                        onChange={(event) => {
                            setName(event.target.value)
                        }}/>
@@ -35,6 +32,4 @@ export default function AddRecipe(props: AddRecipeProps) {
             </form>
         </div>
     )
-
-
 }

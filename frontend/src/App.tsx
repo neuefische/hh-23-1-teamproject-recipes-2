@@ -7,16 +7,10 @@ import {NewRecipe, Recipe} from "./Recipe";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AddRecipe from "./AddRecipe";
 
-
-
 function App() {
 
     const [recipes, setRecipes] = useState<Recipe[]>([])
     const [recipeAdded, setAddRecipe] = useState<string>("")
-
-    /*function onChange(value: string) {
-        setAddRecipe(value)
-    }*/
 
     useEffect(() => {
         loadAllRecipes()
@@ -44,20 +38,17 @@ function App() {
 
     return (
         <BrowserRouter>
-        <div className="App">
-            <Header/>
-            <Routes>
-                <Route element={<Navigate to="/recipes"/>}/>
-                <Route path="/recipes"
-                       element={<RecipeGallery recipes={recipes}/>}/>
-                <Route path="/recipes/add"
-                       element={<AddRecipe addRecipe={addRecipe} />}/>
-
-
-            </Routes>
-        </div>
+            <div className="App">
+                <Header/>
+                <Routes>
+                    <Route element={<Navigate to="/recipes"/>}/>
+                    <Route path="/recipes"
+                           element={<RecipeGallery recipes={recipes}/>}/>
+                    <Route path="/recipes/add"
+                           element={<AddRecipe addRecipe={addRecipe}/>}/>
+                </Routes>
+            </div>
         </BrowserRouter>
     );
 }
-//<ActionBar inputText={recipeAdded} onChange={onChange} addRecipe={addRecipe}/>
 export default App;
