@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -60,9 +61,6 @@ public class RecipeServiceTest {
 
         verify(recipeRepoInterfaceMock, times(1)).findAll();
     }
-    @DirtiesContext
-
-
     @Test
     void getAll_expectedEmptyList_WhenDataBaseIsEmpty() {
         //GIVEN
@@ -80,6 +78,25 @@ public class RecipeServiceTest {
         assertEquals(actual, expected);
 
     }
+@DirtiesContext
+    @Test
+    void addRecipe() {
+        //GIVEN
+        final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
+        final RecipeService recipeService = new RecipeService(recipeRepoInterface);
+
+        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi");
+        when(recipeRepoInterface.save(pizzaFunghi))
+                .thenReturn(pizzaFunghi);
+
+        //WHEN
+        Recipe actual = recipeService.addRecipe(pizzaFunghi);
+
+        //THEN
+        verify(recipeRepoInterface).save(pizzaFunghi);
+        assertEquals(actual, pizzaFunghi);
+    }
+
 }
 
 
