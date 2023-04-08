@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 public record Recipe(
         @Id
         String id,
-        String name
+        String name,
+        String description
 ) {
 }
