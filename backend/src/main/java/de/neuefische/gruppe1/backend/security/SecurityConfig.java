@@ -15,22 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                        .username("frank")
-                        .password("frank1")
-                        .roles("BASIC")
-                        .build(),
-                User.builder()
-                        .username("diggi")
-                        .password("doggi")
-                        .roles("HASAN")
-                        .build()
-        );
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
