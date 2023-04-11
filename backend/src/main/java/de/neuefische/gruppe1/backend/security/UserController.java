@@ -1,4 +1,4 @@
-package security;
+package de.neuefische.gruppe1.backend.security;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
