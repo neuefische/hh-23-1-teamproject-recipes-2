@@ -5,7 +5,6 @@ import axios from "axios";
 export default function useRecipes() {
 
     const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [, setAddRecipe] = useState<string>("")
 
     useEffect(() => {
         loadAllRecipes()
@@ -23,11 +22,7 @@ export default function useRecipes() {
 
     function addRecipe(newRecipe: NewRecipe) {
         axios.post("/api/recipes", newRecipe)
-            .then((response) => {
-                setAddRecipe(response.data)
-            })
             .then(() => loadAllRecipes())
-            .then(() => setAddRecipe(""))
             .catch(() => console.error("post on /api/recipes not successful"))
     }
 
