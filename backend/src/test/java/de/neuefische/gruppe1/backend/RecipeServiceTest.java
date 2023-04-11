@@ -35,9 +35,9 @@ class RecipeServiceTest {
 
     @Test
     void testGetAll() {
-        Recipe recipe1 = new Recipe("1", "Pasta Carbonara");
-        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese");
-        Recipe recipe3 = new Recipe("3", "Lasagne");
+        Recipe recipe1 = new Recipe("1", "Pasta Carbonara","");
+        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese","");
+        Recipe recipe3 = new Recipe("3", "Lasagne","");
 
         List<Recipe> expectedRecipes = Arrays.asList(recipe1, recipe2, recipe3);
 
@@ -79,7 +79,7 @@ class RecipeServiceTest {
         final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
         final RecipeService recipeService = new RecipeService(recipeRepoInterface);
 
-        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi");
+        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi","");
         when(recipeRepoInterface.save(pizzaFunghi))
                 .thenReturn(pizzaFunghi);
 

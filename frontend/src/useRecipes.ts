@@ -5,7 +5,7 @@ import axios from "axios";
 export default function useRecipes() {
 
     const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [recipeAdded, setAddRecipe] = useState<string>("")
+    const [, setAddRecipe] = useState<string>("")
 
     useEffect(() => {
         loadAllRecipes()
