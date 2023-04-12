@@ -60,12 +60,6 @@ class RecipeIntegrationTest {
                 ));
     }
 
-//    @Test
-//    void addRecipe_ShouldReturnRecipeAdded() throws Exception {
-//        mockMvc.perform(get("/api/recipe/add/{id}"))
-//                .andExpect(status().)
-//    }
-
     @Test
     void getRecipeById_ShouldReturnRecipeWithId() throws Exception {
         Recipe recipe = new Recipe("123", "Hamburger", "Muss gegrillt werden");
