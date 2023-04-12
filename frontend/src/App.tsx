@@ -1,40 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import Header from "./Header";
 import RecipeGallery from "./RecipeGallery";
-import axios from "axios";
-import {NewRecipe, Recipe} from "./Recipe";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AddRecipe from "./AddRecipe";
+import useRecipes from "./useRecipes";
 
 function App() {
 
-    const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [recipeAdded, setAddRecipe] = useState<string>("")
-
-    useEffect(() => {
-        loadAllRecipes()
-    }, [])
-
-    function loadAllRecipes() {
-        axios.get("/api/recipes")
-            .then((getAllRecipesResponse) => {
-                setRecipes(getAllRecipesResponse.data)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
-
-    function addRecipe(newRecipe: NewRecipe) {
-        axios.post("/api/recipes", newRecipe)
-            .then((response) => {
-                setAddRecipe(response.data)
-            })
-            .then(() => loadAllRecipes())
-            .then(() => setAddRecipe(""))
-            .catch(() => console.error("post on /api/recipes not successful"))
-    }
+const {recipes, addRecipe} = useRecipes()
 
     return (
         <BrowserRouter>

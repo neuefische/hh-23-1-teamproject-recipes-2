@@ -8,12 +8,13 @@ type AddRecipeProps = {
 
 export default function AddRecipe(props: AddRecipeProps) {
     const [name, setName] = useState<string>('')
+    const [description, setDescription] = useState<string>("")
     const navigate = useNavigate()
 
     function onSaveRecipe(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
-        const newRecipe: NewRecipe = {name: name}
+        const newRecipe: NewRecipe = {name: name, description: description}
 
         props.addRecipe(newRecipe)
 
@@ -23,10 +24,17 @@ export default function AddRecipe(props: AddRecipeProps) {
     return (
         <div>
             <form onSubmit={onSaveRecipe}>
+                <p>Enter Name</p>
                 <input type="text"
                        value={name}
                        onChange={(event) => {
                            setName(event.target.value)
+                       }}/>
+                <p>Enter Description</p>
+                <input type="text"
+                       value={description}
+                       onChange={(event) => {
+                           setDescription(event.target.value)
                        }}/>
                 <button>Save Recipe</button>
             </form>
