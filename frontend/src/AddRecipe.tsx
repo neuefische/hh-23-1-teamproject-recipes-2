@@ -29,13 +29,13 @@ export default function AddRecipe(props: AddRecipeProps) {
                        value={name}
                        onChange={(event) => {
                            setName(event.target.value)
-                       }}/> <br/>
+                       }}/>
                 <p>Enter Description</p>
                 <input type="text"
                        value={description}
                        onChange={(event) => {
                            setDescription(event.target.value)
-                       }}/><br/>
+                       }}/>
                 <button>Save Recipe</button>
             </form>
         </div>
