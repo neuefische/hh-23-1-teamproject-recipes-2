@@ -5,6 +5,14 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import useRecipes from "./useRecipes";
 
+/*
+type Props = {
+    recipe: Recipe,
+    editRecipe: (recipe: Recipe) => void,
+    deleteRecipe: (id: string) => void
+}
+*/
+
 export default function RecipeDetail() {
     const [recipe, setRecipe] = useState<Recipe>()
     const {id} = useParams<{id: string}>()
@@ -26,6 +34,12 @@ export default function RecipeDetail() {
                 toast.error("Recipe does not exist")
             })
     }
+
+    // function onEditClick() {
+    //     const recipeToEdit: Recipe = {...props.recipe, name: props.recipe.name, description: props.recipe.description}
+    //
+    //     props.editRecipe(recipeToEdit)
+    // }
 
     return (
     <div>
