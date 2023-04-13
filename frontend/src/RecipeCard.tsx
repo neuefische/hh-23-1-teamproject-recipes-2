@@ -9,12 +9,14 @@ export default function RecipeCard(props: RecipeProps) {
 
     return (
         <div className="recipe-card">
-            <p>Name:</p>
-            {props.recipe.name}
-            <p>Description:</p>
-            {props.recipe.description}
-            <p>ID:</p>
-            {props.recipe.id}
+            <p>
+                Name:
+                {props.recipe.name}
+                Description:
+                {props.recipe.description}
+                ID:
+                {props.recipe.id}
+            </p>
         </div>
     )
 }
