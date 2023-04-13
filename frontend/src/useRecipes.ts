@@ -28,5 +28,5 @@ export default function useRecipes() {
 
 
 
-    return {recipes, addRecipe}
+    return {recipes, addRecipe, editRecipe}
 }

@@ -3,10 +3,12 @@ import {Recipe} from "./Recipe";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import {toast} from "react-toastify";
+import useRecipes from "./useRecipes";
 
 export default function RecipeDetail() {
     const [recipe, setRecipe] = useState<Recipe>()
     const {id} = useParams<{id: string}>()
+
 
     useEffect(() => {
         if (id) {
@@ -33,6 +35,7 @@ export default function RecipeDetail() {
                 <p>{recipe.id}</p>
                 <p>{recipe.name}</p>
                 <p>{recipe.description}</p>
+                    {/*<button onClick={onEditClick}>Bearbeiten</button>*/}
                 </div>
                 : <div>Loading...</div>
         }
