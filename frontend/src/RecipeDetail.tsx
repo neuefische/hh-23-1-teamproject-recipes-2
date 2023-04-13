@@ -2,8 +2,6 @@ import {useEffect, useState} from "react";
 import {Recipe} from "./Recipe";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {toast} from "react-toastify";
 
 export default function RecipeDetail() {
