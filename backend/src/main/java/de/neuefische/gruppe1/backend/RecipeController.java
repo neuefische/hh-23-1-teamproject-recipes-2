@@ -21,4 +21,9 @@ public class RecipeController {
     public Recipe addRecipe(@RequestBody Recipe recipeToAdd) {
         return recipeService.addRecipe(recipeToAdd);
     }
+
+    @GetMapping("{id}")
+    public Recipe getRecipeById(@PathVariable String id) {
+        return recipeService.getRecipeById(id);
+    }
 }

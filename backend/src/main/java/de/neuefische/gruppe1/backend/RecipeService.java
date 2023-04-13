@@ -21,4 +21,7 @@ public class RecipeService {
         return recipeRepoInterface.save(recipe);
     }
 
+    public Recipe getRecipeById(String id) {
+        return recipeRepoInterface.findById(id).orElseThrow();
+    }
 }

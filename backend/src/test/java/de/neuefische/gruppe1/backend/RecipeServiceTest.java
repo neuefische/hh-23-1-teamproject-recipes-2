@@ -11,12 +11,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
@@ -35,9 +33,9 @@ class RecipeServiceTest {
 
     @Test
     void testGetAll() {
-        Recipe recipe1 = new Recipe("1", "Pasta Carbonara","");
-        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese","");
-        Recipe recipe3 = new Recipe("3", "Lasagne","");
+        Recipe recipe1 = new Recipe("1", "Pasta Carbonara", "");
+        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese", "");
+        Recipe recipe3 = new Recipe("3", "Lasagne", "");
 
         List<Recipe> expectedRecipes = Arrays.asList(recipe1, recipe2, recipe3);
 
@@ -74,12 +72,12 @@ class RecipeServiceTest {
 
     @DirtiesContext
     @Test
-    void addRecipe() {
+    void addRecipe_ShouldRespondAddedRecipe_WhenRecipeAdded() {
         //GIVEN
         final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
         final RecipeService recipeService = new RecipeService(recipeRepoInterface);
 
-        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi","");
+        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi", "");
         when(recipeRepoInterface.save(pizzaFunghi))
                 .thenReturn(pizzaFunghi);
 
@@ -90,4 +88,41 @@ class RecipeServiceTest {
         verify(recipeRepoInterface).save(pizzaFunghi);
         assertEquals(actual, pizzaFunghi);
     }
+
+    @DirtiesContext
+    @Test
+    void getRecipeById_ShouldReturnOneRecipe_WhenOneRecipeIsAdded() {
+        //GIVEN
+        Recipe recipe1 = new Recipe("1", "Futter", "Musste Kochen");
+
+        when(recipeRepoInterfaceMock.findById("1")).thenReturn(Optional.of(recipe1));
+
+        //WHEN
+        Recipe actual = recipeService.getRecipeById("1");
+
+        //THEN
+        Recipe expected = new Recipe("1", "Futter", "Musste Kochen");
+        verify(recipeRepoInterfaceMock).findById("1");
+        assertEquals(expected, actual);
+    }
+
+    @DirtiesContext
+    @Test
+    void getRecipeById_ShouldReturnException_WhenRecipeDoesNotExist() {
+        //GIVEN
+        when(recipeRepoInterfaceMock.findById("1")).thenThrow(NoSuchElementException.class);
+
+        //WHEN
+        try {
+            recipeService.getRecipeById("1");
+            fail();
+        }
+        //THEN
+        catch (NoSuchElementException Ignored) {
+            verify(recipeRepoInterfaceMock).findById("1");
+        }
+        //Alternative zu When-Then
+        //Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
+    }
+
 }

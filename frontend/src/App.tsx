@@ -5,10 +5,11 @@ import RecipeGallery from "./RecipeGallery";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AddRecipe from "./AddRecipe";
 import useRecipes from "./useRecipes";
+import RecipeDetail from "./RecipeDetail";
 
 function App() {
 
-const {recipes, addRecipe} = useRecipes()
+    const {recipes, addRecipe} = useRecipes()
 
     return (
         <BrowserRouter>
@@ -20,9 +21,12 @@ const {recipes, addRecipe} = useRecipes()
                            element={<RecipeGallery recipes={recipes}/>}/>
                     <Route path="/recipes/add"
                            element={<AddRecipe addRecipe={addRecipe}/>}/>
+                    <Route path="/recipes/:id"
+                           element={<RecipeDetail/>}/>
                 </Routes>
             </div>
         </BrowserRouter>
     );
 }
+
 export default App;
