@@ -121,7 +121,6 @@ class RecipeServiceTest {
         catch (NoSuchElementException Ignored) {
             verify(recipeRepoInterfaceMock).findById("1");
         }
-
         //Alternative zu When-Then
         //Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
     }
