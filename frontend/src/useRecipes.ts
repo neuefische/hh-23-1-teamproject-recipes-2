@@ -26,7 +26,22 @@ export default function useRecipes() {
             .catch(() => console.error("post on /api/recipes not successful"))
     }
 
+    function editRecipe(recipe: Recipe) {
+        axios.put(`/api/recipes/${recipe.id}`, recipe)
+            .then((putRecipeResponse) => {
+                setRecipes(recipes.map(currentRecipe => {
+                    if (currentRecipe.id === recipe.id) {
+                        return putRecipeResponse.data
+                    }
+                    else {
+                        return currentRecipe
+                    }
+                }))
+            })
+            .catch(console.error)
+    }
 
 
-    return {recipes, addRecipe}
+
+    return {recipes, addRecipe, editRecipe}
 }
