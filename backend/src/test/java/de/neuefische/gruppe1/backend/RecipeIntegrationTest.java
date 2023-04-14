@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,7 +41,7 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
-    void addRecipe_ShouldReturnRecipeAdded() throws Exception {
+    void getRecipe_ShouldReturnAllRecipeAdded() throws Exception {
         Recipe recipe = new Recipe("666", "Evil Food", "Burn in Hell");
         recipeRepoInterface.save(recipe);
         Recipe recipe2 = new Recipe("333", "Half Evil Food", "Burn in Hell Medium");
@@ -67,6 +69,31 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
+    void addRecipe_shouldReturnaddedRecipe() throws Exception {
+        mockMvc.perform(post("/api/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
     void getRecipeById_ShouldReturnRecipeWithId() throws Exception {
         Recipe recipe = new Recipe("123", "Hamburger", "Muss gegrillt werden");
         recipeRepoInterface.save(recipe);
@@ -86,12 +113,7 @@ class RecipeIntegrationTest {
     
     @Test
     @DirtiesContext
-    void editRecipe_editById_shouldReturnEditedRecipe3() throws Exception {
-        RecipeService recipeService = new RecipeService(recipeRepoInterface);
-        Recipe recipeV1 = new Recipe("1234", "OaklahomaBurger", "Müssen Zwieblen drunter");
-        recipeService.addRecipe(recipeV1);
-
-
+    void editRecipe_editById_shouldReturnEditedRecipe() throws Exception {
         mockMvc.perform(put("/api/recipes/1234/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
