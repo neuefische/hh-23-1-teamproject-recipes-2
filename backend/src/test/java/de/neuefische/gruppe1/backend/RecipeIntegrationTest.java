@@ -113,7 +113,7 @@ class RecipeIntegrationTest {
     
     @Test
     @DirtiesContext
-    void editRecipe_editById_shouldReturnEditedRecipe() throws Exception {
+    void editRecipe_ById_shouldReturnEditedRecipe() throws Exception {
         mockMvc.perform(put("/api/recipes/1234/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -134,6 +134,22 @@ class RecipeIntegrationTest {
                                 }
                                 """
                 ));
+    }
+
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_shouldReturnBadRequest() throws Exception {
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "12",
+                                "name": "BadRequest-Burger",
+                                "description": "id stimmt nicht mit id in url überein muss Status 400 > BadRequest kommen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isBadRequest());
     }
 
 }
