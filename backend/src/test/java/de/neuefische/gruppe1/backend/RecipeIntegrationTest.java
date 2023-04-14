@@ -10,6 +10,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -81,5 +82,36 @@ class RecipeIntegrationTest {
                                     """
                 ));
     }
+    
+    @Test
+    @DirtiesContext
+    void editRecipe_editById_shouldReturnEditedRecipe3() throws Exception {
+        RecipeService recipeService = new RecipeService(recipeRepoInterface);
+        Recipe recipeV1 = new Recipe("1234", "OaklahomaBurger", "Müssen Zwieblen drunter");
+        recipeService.addRecipe(recipeV1);
+
+
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                ));
+    }
+
 }
 
