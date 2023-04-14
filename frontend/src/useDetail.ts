@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axios from "axios";
 
-
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
     const [editing, setEditing] = useState(false); // State to manage edit mode
