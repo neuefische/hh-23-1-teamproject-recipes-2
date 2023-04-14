@@ -125,4 +125,19 @@ class RecipeServiceTest {
         //Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
     }
 
+    @DirtiesContext
+    @Test
+    void editRecipe_ShouldReturnEditedRecipe_WhenValidIdProvided() {
+        // GIVEN
+        Recipe updatedRecipe = new Recipe("1", "Maultaschen gebraten", "Braten und Schneiden");
+
+        when(recipeRepoInterfaceMock.save(updatedRecipe)).thenReturn(updatedRecipe);
+
+        // WHEN
+        Recipe actual = recipeService.editRecipe(updatedRecipe);
+
+        // THEN
+        verify(recipeRepoInterfaceMock).save(updatedRecipe);
+        assertEquals(updatedRecipe, actual);
+    }
 }
