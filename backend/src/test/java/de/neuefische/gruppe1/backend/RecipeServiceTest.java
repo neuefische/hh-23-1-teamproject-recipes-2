@@ -1,7 +1,8 @@
 package de.neuefische.gruppe1.backend;
 
-import de.neuefische.gruppe1.backend.model.Recipe;
-import de.neuefische.gruppe1.backend.model.RecipeRepoInterface;
+import de.neuefische.gruppe1.backend.recipe.Recipe;
+import de.neuefische.gruppe1.backend.recipe.RecipeRepoInterface;
+import de.neuefische.gruppe1.backend.recipe.RecipeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
