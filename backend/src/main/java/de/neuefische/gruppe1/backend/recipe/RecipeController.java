@@ -1,6 +1,5 @@
- package de.neuefische.gruppe1.backend;
+ package de.neuefische.gruppe1.backend.recipe;
 
-import de.neuefische.gruppe1.backend.model.Recipe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
