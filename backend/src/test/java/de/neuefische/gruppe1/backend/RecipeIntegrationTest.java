@@ -6,10 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +41,7 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
-    void addRecipe_ShouldReturnRecipeAdded() throws Exception {
+    void getRecipe_ShouldReturnAllRecipeAdded() throws Exception {
         Recipe recipe = new Recipe("666", "Evil Food", "Burn in Hell");
         recipeRepoInterface.save(recipe);
         Recipe recipe2 = new Recipe("333", "Half Evil Food", "Burn in Hell Medium");
@@ -65,6 +69,31 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
+    void addRecipe_shouldReturnaddedRecipe() throws Exception {
+        mockMvc.perform(post("/api/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
     void getRecipeById_ShouldReturnRecipeWithId() throws Exception {
         Recipe recipe = new Recipe("123", "Hamburger", "Muss gegrillt werden");
         recipeRepoInterface.save(recipe);
@@ -74,12 +103,54 @@ class RecipeIntegrationTest {
                 .andExpect(content().json(
                         """
                                     {
-                                    "id":  "123",
+                                    "id": "123",
                                     "name": "Hamburger",
                                     "description": "Muss gegrillt werden"
                                 }
                                     """
                 ));
     }
+    
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_shouldReturnEditedRecipe() throws Exception {
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_shouldReturnBadRequest() throws Exception {
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "12",
+                                "name": "BadRequest-Burger",
+                                "description": "id stimmt nicht mit id in url überein muss Status 400 > BadRequest kommen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isBadRequest());
+    }
+
 }
 

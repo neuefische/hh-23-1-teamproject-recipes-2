@@ -1,8 +1,10 @@
-package de.neuefische.gruppe1.backend;
+ package de.neuefische.gruppe1.backend;
 
 import de.neuefische.gruppe1.backend.model.Recipe;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,5 +27,13 @@ public class RecipeController {
     @GetMapping("{id}")
     public Recipe getRecipeById(@PathVariable String id) {
         return recipeService.getRecipeById(id);
+    }
+
+    @PutMapping(path = {"{id}/update", "{id}"})
+    public Recipe editRecipe(@PathVariable String id,@RequestBody Recipe recipeToEdit) {
+        if (!recipeToEdit.id().equals(id)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The Recipe does not exist");
+        }
+        return recipeService.editRecipe(recipeToEdit);
     }
 }

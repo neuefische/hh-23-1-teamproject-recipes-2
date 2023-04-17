@@ -24,4 +24,8 @@ public class RecipeService {
     public Recipe getRecipeById(String id) {
         return recipeRepoInterface.findById(id).orElseThrow();
     }
+
+    public Recipe editRecipe(Recipe recipeToEdit) {
+        return recipeRepoInterface.save(recipeToEdit);
+    }
 }

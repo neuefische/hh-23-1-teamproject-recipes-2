@@ -1,41 +1,43 @@
-import {useEffect, useState} from "react";
-import {Recipe} from "./Recipe";
-import {useParams} from "react-router-dom";
-import axios from "axios";
-import {toast} from "react-toastify";
+import useDetail from "./useDetail";
 
-export default function RecipeDetail() {
-    const [recipe, setRecipe] = useState<Recipe>()
-    const {id} = useParams<{id: string}>()
+function RecipeDetail() {
 
-    useEffect(() => {
-        if (id) {
-            loadRecipeById(id)
-        }
-       //eslint-disable-next-line
-    }, [])
-
-    function loadRecipeById(id: string) {
-        axios.get("/api/recipes/" + id)
-            .then((response) => {
-                setRecipe(response.data)
-            })
-            .catch((error) => {
-                toast.error("Recipe does not exist")
-            })
-    }
+    const {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange} = useDetail()
 
     return (
-    <div>
-        {
-            recipe
-            ?<div>
-                <p>{recipe.id}</p>
-                <p>{recipe.name}</p>
-                <p>{recipe.description}</p>
-                </div>
-                : <div>Loading...</div>
-        }
-    </div>
-    )
+        <div>
+            {recipe ? (
+                editing ? (
+                    <form onSubmit={handleFormSubmit}>
+                        <header>Rezept bearbeiten</header>
+                        <input
+                            type="text"
+                            name="name"
+                            value={editedRecipe.name}
+                            onChange={recipeInputChange}
+                        />
+                        <input
+                            type="text"
+                            name="description"
+                            value={editedRecipe.description}
+                            onChange={recipeInputChange}
+                        />
+                        <button type="submit">Speichern</button>
+                    </form>
+                ) : (
+                    <div>
+                        <header>Rezept details</header>
+                        <p>{recipe.id}</p>
+                        <p>{recipe.name}</p>
+                        <p>{recipe.description}</p>
+                        <button onClick={editOnClick}>Rezept Bearbeiten</button>
+                    </div>
+                )
+            ) : (
+                <div>Loading...</div>
+            )}
+        </div>
+    );
 }
+
+export default RecipeDetail
