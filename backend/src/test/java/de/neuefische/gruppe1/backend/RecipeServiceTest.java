@@ -13,8 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
@@ -146,14 +145,13 @@ class RecipeServiceTest {
     void deleteRecipeById_shouldDeleteRecipeById(){
         //GIVEN
         Recipe recipeToDelete = new Recipe ("1", "Rezept löschen", "schnell löschen");
-
-        //when(recipeRepoInterfaceMock.save(recipeToDelete)).thenReturn(recipeToDelete);
+        recipeRepoInterfaceMock.save(recipeToDelete);
 
         //WHEN
-        Recipe actual = recipeService.deleteRecipe(recipeToDelete.id("1"));
+        recipeService.deleteRecipe("1");
 
         //THEN
         verify(recipeRepoInterfaceMock).deleteById("1");
-        //assertEquals(recipeToDelete, actual);
     }
+
 }
