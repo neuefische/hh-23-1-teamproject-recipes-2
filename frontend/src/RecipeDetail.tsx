@@ -2,7 +2,7 @@ import useDetail from "./useDetail";
 
 function RecipeDetail() {
 
-    const {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange} = useDetail()
+    const {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange, deleteOnClick} = useDetail()
 
     return (
         <div>
@@ -31,6 +31,7 @@ function RecipeDetail() {
                         <p>{recipe.name}</p>
                         <p>{recipe.description}</p>
                         <button onClick={editOnClick}>Rezept Bearbeiten</button>
+                        <button onClick={deleteOnClick}>Rezept löschen</button>
                     </div>
                 )
             ) : (
