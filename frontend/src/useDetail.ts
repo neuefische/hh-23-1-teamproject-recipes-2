@@ -3,7 +3,6 @@ import {Recipe} from "./Recipe";
 import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axios from "axios";
-import useRecipes from "./useRecipes";
 
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
@@ -16,7 +15,6 @@ export default function useDetail() {
     });
 
     const {id} = useParams<{ id: string }>();
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (id) {
@@ -36,7 +34,6 @@ export default function useDetail() {
                 toast.error("Recipe does not exist");
             });
     }
-
 
     function editOnClick() {
         setEditing(true);
