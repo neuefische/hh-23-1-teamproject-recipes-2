@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Recipe} from "./Recipe";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axios from "axios";
+import useRecipes from "./useRecipes";
 
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
@@ -15,7 +16,12 @@ export default function useDetail() {
     });
 
     const {id} = useParams<{ id: string }>();
+    const navigate = useNavigate()
+    const {loadAllRecipes} = useRecipes()
 
+    useEffect(() => {
+        loadAllRecipes()
+    }, [])
 
     useEffect(() => {
         if (id) {
@@ -40,8 +46,13 @@ export default function useDetail() {
         axios.delete('/api/recipes/' + id)
             .then(() => {
                 setRecipes(recipes.filter((recipe) => recipe.id !== id))
+                navigate("/recipes")
+                window.location.reload();
+                toast.success("Recipe deleted successfully");
             })
             .catch(console.error)
+
+
     }
 
     function editOnClick() {
