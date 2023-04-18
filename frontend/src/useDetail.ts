@@ -6,7 +6,6 @@ import axios from "axios";
 
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
-   // const [recipes, setRecipes] = useState<Recipe[]>([])
     const [editing, setEditing] = useState(false);
     const [editedRecipe, setEditedRecipe] = useState<Recipe>({
         id: "",
