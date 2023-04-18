@@ -15,6 +15,7 @@ export default function useDetail() {
 
     const {id} = useParams<{ id: string }>();
 
+
     useEffect(() => {
         if (id) {
             loadRecipeById(id);
@@ -32,6 +33,14 @@ export default function useDetail() {
             .catch((error) => {
                 toast.error("Recipe does not exist");
             });
+    }
+
+    function deleteOnClick() {
+        axios.delete('/api/recipes/' + id)
+            .then(() => {
+                setRecipes(recipes.filter((recipe) => recipe.id !== id))
+            })
+            .catch(console.error)
     }
 
     function editOnClick() {
@@ -60,5 +69,5 @@ export default function useDetail() {
             });
     }
 
-    return {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange}
+    return {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange, deleteOnClick}
 }
