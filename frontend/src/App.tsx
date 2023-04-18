@@ -9,7 +9,7 @@ import RecipeDetail from "./RecipeDetail";
 
 function App() {
 
-    const {recipes, addRecipe} = useRecipes()
+    const {recipes, addRecipe, deleteRecipe} = useRecipes()
 
     return (
         <BrowserRouter>
@@ -22,7 +22,7 @@ function App() {
                     <Route path="/recipes/add"
                            element={<AddRecipe addRecipe={addRecipe}/>}/>
                     <Route path="/recipes/:id"
-                           element={<RecipeDetail/>}/>
+                           element={<RecipeDetail deleteRecipe={deleteRecipe}/>}/>
                 </Routes>
             </div>
         </BrowserRouter>

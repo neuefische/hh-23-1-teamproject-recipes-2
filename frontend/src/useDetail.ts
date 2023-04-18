@@ -7,8 +7,8 @@ import useRecipes from "./useRecipes";
 
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
-    const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [editing, setEditing] = useState(false); // State to manage edit mode
+   // const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [editing, setEditing] = useState(false);
     const [editedRecipe, setEditedRecipe] = useState<Recipe>({
         id: "",
         name: "",
@@ -17,11 +17,6 @@ export default function useDetail() {
 
     const {id} = useParams<{ id: string }>();
     const navigate = useNavigate()
-    const {loadAllRecipes} = useRecipes()
-
-    useEffect(() => {
-        loadAllRecipes()
-    }, [])
 
     useEffect(() => {
         if (id) {
@@ -35,25 +30,13 @@ export default function useDetail() {
             .get("/api/recipes/" + id)
             .then((response) => {
                 setRecipe(response.data);
-                setEditedRecipe(response.data); // Set initial values for edited recipe
+                setEditedRecipe(response.data);
             })
             .catch((error) => {
                 toast.error("Recipe does not exist");
             });
     }
 
-    function deleteOnClick() {
-        axios.delete('/api/recipes/' + id)
-            .then(() => {
-                setRecipes(recipes.filter((recipe) => recipe.id !== id))
-                navigate("/recipes")
-                window.location.reload();
-                toast.success("Recipe deleted successfully");
-            })
-            .catch(console.error)
-
-
-    }
 
     function editOnClick() {
         setEditing(true);
@@ -81,5 +64,5 @@ export default function useDetail() {
             });
     }
 
-    return {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange, deleteOnClick}
+    return {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange}
 }
