@@ -1,4 +1,4 @@
-package de.neuefische.gruppe1.backend.model;
+package de.neuefische.gruppe1.backend.recipe;
 
 import org.springframework.data.annotation.Id;
 

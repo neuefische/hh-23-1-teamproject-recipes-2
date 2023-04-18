@@ -1,7 +1,5 @@
-package de.neuefische.gruppe1.backend;
+package de.neuefische.gruppe1.backend.recipe;
 
-import de.neuefische.gruppe1.backend.model.Recipe;
-import de.neuefische.gruppe1.backend.model.RecipeRepoInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
