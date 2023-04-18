@@ -1,5 +1,6 @@
 package de.neuefische.gruppe1.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.gruppe1.backend.recipe.Recipe;
 import de.neuefische.gruppe1.backend.recipe.RecipeRepoInterface;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +23,9 @@ class RecipeIntegrationTest {
 
     @Autowired
     RecipeRepoInterface recipeRepoInterface;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Test
@@ -151,5 +153,33 @@ class RecipeIntegrationTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @DirtiesContext
+    @Test
+        void expectSuccessfulDelete() throws Exception {
+        String saveResult = mockMvc.perform(
+                        post("http://localhost:8080/api/recipes")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {"description":"Nächsten Endpunkt implementieren","status":"OPEN"}
+                                        """)
+
+                )
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Recipe saveResultRecipe = objectMapper.readValue(saveResult, Recipe.class);
+        String id = saveResultRecipe.id();
+
+        mockMvc.perform(delete("http://localhost:8080/api/recipes/" + id)
+                        )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("http://localhost:8080/api/recipes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
 }
 

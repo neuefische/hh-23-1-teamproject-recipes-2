@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Recipe} from "./Recipe";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axios from "axios";
 
 export default function useDetail() {
     const [recipe, setRecipe] = useState<Recipe>();
-    const [editing, setEditing] = useState(false); // State to manage edit mode
+   // const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [editing, setEditing] = useState(false);
     const [editedRecipe, setEditedRecipe] = useState<Recipe>({
         id: "",
         name: "",
@@ -27,7 +28,7 @@ export default function useDetail() {
             .get("/api/recipes/" + id)
             .then((response) => {
                 setRecipe(response.data);
-                setEditedRecipe(response.data); // Set initial values for edited recipe
+                setEditedRecipe(response.data);
             })
             .catch((error) => {
                 toast.error("Recipe does not exist");

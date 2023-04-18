@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {NewRecipe, Recipe} from "./Recipe";
 import axios from "axios";
+import {toast} from "react-toastify";
 
 export default function useRecipes() {
 
@@ -26,5 +27,14 @@ export default function useRecipes() {
             .catch(() => console.error("post on /api/recipes not successful"))
     }
 
-    return {recipes, addRecipe}
+    function deleteRecipe(id : string) {
+        axios.delete('/api/recipes/' + id)
+            .then(() => {
+                setRecipes(recipes.filter((recipe) => recipe.id !== id))
+                toast.success("Recipe deleted successfully");
+            })
+            .catch(console.error)
+    }
+
+    return {recipes, addRecipe, deleteRecipe}
 }

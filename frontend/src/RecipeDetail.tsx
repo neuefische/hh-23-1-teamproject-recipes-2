@@ -1,8 +1,22 @@
 import useDetail from "./useDetail";
+import {useNavigate} from "react-router-dom";
 
-function RecipeDetail() {
+type RecipeDetailProps = {
+    deleteRecipe: (id: string) => void
+}
+
+function RecipeDetail(props: RecipeDetailProps) {
 
     const {editedRecipe, recipe, editing, handleFormSubmit, editOnClick, recipeInputChange} = useDetail()
+    const navigate = useNavigate()
+
+    function onDeleteClick() {
+        if (recipe) {
+            props.deleteRecipe(recipe.id)
+        }
+
+        navigate("/recipes")
+    }
 
     return (
         <div>
@@ -31,6 +45,7 @@ function RecipeDetail() {
                         <p>{recipe.name}</p>
                         <p>{recipe.description}</p>
                         <button onClick={editOnClick}>Rezept Bearbeiten</button>
+                        <button onClick={onDeleteClick}>Rezept löschen</button>
                     </div>
                 )
             ) : (

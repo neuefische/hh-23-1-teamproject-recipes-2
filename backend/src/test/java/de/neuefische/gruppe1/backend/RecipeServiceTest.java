@@ -14,8 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
@@ -141,4 +140,19 @@ class RecipeServiceTest {
         verify(recipeRepoInterfaceMock).save(updatedRecipe);
         assertEquals(updatedRecipe, actual);
     }
+
+    @DirtiesContext
+    @Test
+    void deleteRecipeById_shouldDeleteRecipeById(){
+        //GIVEN
+        Recipe recipeToDelete = new Recipe ("1", "Rezept löschen", "schnell löschen");
+        recipeRepoInterfaceMock.save(recipeToDelete);
+
+        //WHEN
+        recipeService.deleteRecipe("1");
+
+        //THEN
+        verify(recipeRepoInterfaceMock).deleteById("1");
+    }
+
 }

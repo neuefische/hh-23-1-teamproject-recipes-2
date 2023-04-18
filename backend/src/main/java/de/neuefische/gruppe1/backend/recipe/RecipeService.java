@@ -26,4 +26,8 @@ public class RecipeService {
     public Recipe editRecipe(Recipe recipeToEdit) {
         return recipeRepoInterface.save(recipeToEdit);
     }
+
+    public void deleteRecipe(String id){
+        recipeRepoInterface.deleteById(id);
+    }
 }
