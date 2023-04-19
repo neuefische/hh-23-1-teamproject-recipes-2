@@ -12,11 +12,12 @@ export default function RecipeCard(props: RecipeProps) {
 
     return (
         <div className="recipe-card">
-            <p>Name:</p>
             {props.recipe.name}
-            <p>Description:</p>
+            <br/><br/>
+            <p>weitere Infos:</p>
             {props.recipe.description}
-            <p>ID:</p>
+            <br/><br/>
+            <button onClick={() => {navigate("/recipes/" + props.recipe.id)}}>Rezeptdetails</button>
         </div>
     )
 }

@@ -16,12 +16,16 @@ export default function RecipeGallery(props: RecipeGalleryProps) {
     );
     return (
         <div className="recipe-gallery">
+            <br/>
+            <br/>
+            <div className="actionbar">
             <input
                 type="text"
                 placeholder="Search for a recipe..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
+            </div>
             {filteredRecipes.map((card : Recipe) => (
                 <RecipeCard key={card.id} recipe={card} />
             ))}
