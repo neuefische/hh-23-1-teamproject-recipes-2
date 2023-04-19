@@ -17,8 +17,6 @@ export default function RecipeCard(props: RecipeProps) {
             <p>Description:</p>
             {props.recipe.description}
             <p>ID:</p>
-            {props.recipe.id}
-            <button onClick={() => {navigate("/recipes/" + props.recipe.id)}}>Recipe Details</button>
         </div>
     )
 }
