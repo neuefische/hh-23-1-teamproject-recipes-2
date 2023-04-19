@@ -12,23 +12,23 @@ import java.security.Principal;
 @RequestMapping("/api/users")
 
 public class UserController {
-    @GetMapping
+/*    @GetMapping
     public String getTest() {
         return "Test";
     }
 
-/*    @GetMapping("/me")
-    public String getMe(Principal principal) {
-        System.out.println(principal);
-        return principal.getName();
-    }*/
+   @GetMapping("/me")
+    public String getMe1(Principal principal1) {
+        System.out.println(principal1);
+        return principal1.getName();
+    }
 
-/*    @GetMapping("/me")
-    public String getMe(Principal principal) {
-        if (principal == null) {
+   @GetMapping("/me")
+    public String getMe2(Principal principal2) {
+        if (principal2 == null) {
             return "anonymousUser";
         }
-        return principal.getName();
+        return principal2.getName();
     }*/
 
     @GetMapping("/me")

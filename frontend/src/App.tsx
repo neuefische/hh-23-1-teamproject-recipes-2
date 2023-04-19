@@ -6,16 +6,20 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AddRecipe from "./AddRecipe";
 import useRecipes from "./useRecipes";
 import RecipeDetail from "./RecipeDetail";
+import LoginPage from "./LoginPage";
+import useUser from "./useUser";
 
 function App() {
 
     const {recipes, addRecipe, deleteRecipe} = useRecipes()
+    const {user, login} = useUser()
 
     return (
         <BrowserRouter>
             <div className="App">
                 <Header/>
                 <Routes>
+                    <Route path="/login" element={<LoginPage onLogin={login}/>}/>
                     <Route element={<Navigate to="/recipes"/>}/>
                     <Route path="/recipes"
                            element={<RecipeGallery recipes={recipes}/>}/>
