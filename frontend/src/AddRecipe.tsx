@@ -25,13 +25,13 @@ export default function AddRecipe(props: AddRecipeProps) {
     return (
         <div>
             <form onSubmit={onSaveRecipe}>
-                <p>Enter Name</p>
+                <p>Rezeptname:</p>
                 <input type="text"
                        value={name}
                        onChange={(event) => {
                            setName(event.target.value)
                        }}/>
-                <p>Enter Description</p>
+                <p>Rezeptbeschreibung:</p>
                 <textarea
                        value={description}
                        onChange={(event) => {

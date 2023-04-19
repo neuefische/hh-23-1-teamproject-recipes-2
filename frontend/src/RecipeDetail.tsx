@@ -41,10 +41,12 @@ function RecipeDetail(props: RecipeDetailProps) {
                     </form>
                 ) : (
                     <div>
-                        <header>Rezept details</header>
-                        <p>{recipe.id}</p>
+                        <header>alle Infos zum Rezept: </header>
+                        <br/>
                         <p>{recipe.name}</p>
+                        <br/>
                         <p>{recipe.description}</p>
+                        <br/>
                         <button onClick={editOnClick}>Rezept Bearbeiten</button>
                         <button onClick={onDeleteClick}>Rezept löschen</button>
                     </div>

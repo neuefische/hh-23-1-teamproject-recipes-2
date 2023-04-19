@@ -21,7 +21,7 @@ export default function RecipeGallery(props: RecipeGalleryProps) {
             <div className="actionbar">
             <input
                 type="text"
-                placeholder="Search for a recipe..."
+                placeholder="Rezeptname..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
