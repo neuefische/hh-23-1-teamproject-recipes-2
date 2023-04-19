@@ -1,6 +1,6 @@
 import {Link, NavLink} from "react-router-dom";
-
 export default function Header() {
+
     return (
         <div>
             <h1>Hier gibt es bald was zu Futtern</h1>
