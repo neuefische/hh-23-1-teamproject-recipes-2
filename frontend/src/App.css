@@ -4,6 +4,6 @@
 
 body{
     color: seashell;
-    background-image: url('/Users/teresakoetter/Downloads/hamburger-g56090d1e3_1920.jpg');
+    background-image: url("./Hamburger.jpg");
     background-size: cover;
 }
