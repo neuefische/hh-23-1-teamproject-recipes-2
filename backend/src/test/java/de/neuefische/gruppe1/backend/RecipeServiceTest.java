@@ -111,18 +111,18 @@ class RecipeServiceTest {
     void getRecipeById_ShouldReturnException_WhenRecipeDoesNotExist() {
         //GIVEN
         when(recipeRepoInterfaceMock.findById("1")).thenThrow(NoSuchElementException.class);
+        Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
 
         //WHEN
-        try {
+/*        try {
             recipeService.getRecipeById("1");
             fail();
         }
         //THEN
         catch (NoSuchElementException Ignored) {
             verify(recipeRepoInterfaceMock).findById("1");
-        }
-        //Alternative zu When-Then
-        //Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
+        }*/
+
     }
 
     @DirtiesContext
