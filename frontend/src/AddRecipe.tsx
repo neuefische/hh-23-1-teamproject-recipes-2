@@ -1,6 +1,7 @@
 import {NewRecipe} from "./Recipe";
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import './AddRecipe.css'
 
 type AddRecipeProps = {
     addRecipe: (newRecipe: NewRecipe) => void
@@ -31,12 +32,13 @@ export default function AddRecipe(props: AddRecipeProps) {
                            setName(event.target.value)
                        }}/>
                 <p>Enter Description</p>
-                <input type="text"
+                <textarea
                        value={description}
                        onChange={(event) => {
                            setDescription(event.target.value)
                        }}/>
-                <button>Save Recipe</button>
+                <br/>
+                <button>Rezept speichern</button>
             </form>
         </div>
     )

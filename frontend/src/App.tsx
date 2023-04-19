@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import Header from "./Header";
 import RecipeGallery from "./RecipeGallery";
@@ -14,6 +13,8 @@ function App() {
 
     const {recipes, addRecipe, deleteRecipe} = useRecipes()
     const {user, login} = useUser()
+
+
 
     return (
         <BrowserRouter>

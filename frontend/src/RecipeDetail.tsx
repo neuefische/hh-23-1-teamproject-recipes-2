@@ -1,5 +1,6 @@
 import useDetail from "./useDetail";
 import {useNavigate} from "react-router-dom";
+import './RecipeDetail.css'
 
 type RecipeDetailProps = {
     deleteRecipe: (id: string) => void
@@ -19,7 +20,7 @@ function RecipeDetail(props: RecipeDetailProps) {
     }
 
     return (
-        <div>
+        <div className="recipe-detail">
             {recipe ? (
                 editing ? (
                     <form onSubmit={handleFormSubmit}>

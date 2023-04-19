@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 export default function useRecipes() {
 
     const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         loadAllRecipes()
@@ -35,6 +36,7 @@ export default function useRecipes() {
             })
             .catch(console.error)
     }
+    const filteredRecipes = recipes.filter((recipe) => recipe.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    return {recipes, addRecipe, deleteRecipe}
+    return {recipes: filteredRecipes, addRecipe, deleteRecipe, searchTerm, setSearchTerm};
 }

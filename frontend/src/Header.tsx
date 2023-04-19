@@ -1,12 +1,14 @@
 import {Link, NavLink} from "react-router-dom";
-export default function Header() {
+import './Header.css'
 
+export default function Header() {
     return (
-        <div>
-            <h1>Hier gibt es bald was zu Futtern</h1>
+        <div className="header">
+            <h1>Just eat it.</h1>
+            <p>"no one wants to be defeated- showin' how funky and strong is your fight -
+                it doesn't matter who's wrong or right, just eat it, eat it"</p>
             <Link to="/recipes">Zu den Rezepten</Link><br/>
             <NavLink to="/recipes/add">Rezept erstellen</NavLink><br/>
-            <NavLink to="/login">Login</NavLink><br/>
         </div>
     )
 }
