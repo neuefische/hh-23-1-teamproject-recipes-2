@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -70,6 +72,7 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void addRecipe_shouldReturnaddedRecipe() throws Exception {
         mockMvc.perform(post("/api/recipes")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +83,9 @@ class RecipeIntegrationTest {
                                 "description": "Hauptsache etwas im Magen"
                                 }
                                 """
-                        ))
+                        )
+                        .with(csrf())
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
@@ -95,6 +100,7 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void getRecipeById_ShouldReturnRecipeWithId() throws Exception {
         Recipe recipe = new Recipe("123", "Hamburger", "Muss gegrillt werden");
         recipeRepoInterface.save(recipe);
@@ -111,9 +117,10 @@ class RecipeIntegrationTest {
                                     """
                 ));
     }
-    
+
     @Test
     @DirtiesContext
+    @WithMockUser
     void editRecipe_ById_shouldReturnEditedRecipe() throws Exception {
         mockMvc.perform(put("/api/recipes/1234/update")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -124,7 +131,8 @@ class RecipeIntegrationTest {
                                 "description": "Müssen Zwiebeln drauf"
                                 }
                                 """
-                        ))
+                        )
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
@@ -139,6 +147,7 @@ class RecipeIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void editRecipe_ById_shouldReturnBadRequest() throws Exception {
         mockMvc.perform(put("/api/recipes/1234/update")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -149,19 +158,32 @@ class RecipeIntegrationTest {
                                 "description": "id stimmt nicht mit id in url überein muss Status 400 > BadRequest kommen"
                                 }
                                 """
-                        ))
+                        )
+                        .with(csrf())
+                )
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_expect401_whenAnonymousUser() throws Exception {
+        mockMvc.perform(put("/api/recipes/add")
+                        .with(csrf())
+                )
+                .andExpect(status().isUnauthorized());
     }
 
     @DirtiesContext
     @Test
-        void expectSuccessfulDelete() throws Exception {
+    @WithMockUser
+    void expectSuccessfulDelete() throws Exception {
         String saveResult = mockMvc.perform(
                         post("http://localhost:8080/api/recipes")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
                                         {"description":"Nächsten Endpunkt implementieren","status":"OPEN"}
                                         """)
+                                .with(csrf())
 
                 )
                 .andReturn()
@@ -172,7 +194,8 @@ class RecipeIntegrationTest {
         String id = saveResultRecipe.id();
 
         mockMvc.perform(delete("http://localhost:8080/api/recipes/" + id)
-                        )
+                        .with(csrf())
+                )
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("http://localhost:8080/api/recipes"))
