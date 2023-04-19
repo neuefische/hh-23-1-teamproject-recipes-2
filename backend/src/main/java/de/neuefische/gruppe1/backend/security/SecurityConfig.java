@@ -36,10 +36,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/users").authenticated()
                 .requestMatchers("/api/recipes").permitAll()
                 .anyRequest().permitAll()
-/*                .and()
-                .formLogin()
-                .and()
-                .logout()*/
                 .and().build();
     }
 }
