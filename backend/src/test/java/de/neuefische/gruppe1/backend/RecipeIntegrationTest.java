@@ -1,25 +1,17 @@
 package de.neuefische.gruppe1.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neuefische.gruppe1.backend.model.Recipe;
+import de.neuefische.gruppe1.backend.recipe.Recipe;
+import de.neuefische.gruppe1.backend.recipe.RecipeRepoInterface;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,11 +22,15 @@ class RecipeIntegrationTest {
     MockMvc mockMvc;
 
     @Autowired
+    RecipeRepoInterface recipeRepoInterface;
+
+    @Autowired
     ObjectMapper objectMapper;
 
+
     @Test
-    @WithAnonymousUser
-    void getAll_ShouldReturnAllRecipesWithAnonymousUser() throws Exception {
+    @DirtiesContext
+    void getAll_ShouldReturnAllRecipes() throws Exception {
         mockMvc.perform(get("/api/recipes"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
@@ -45,50 +41,145 @@ class RecipeIntegrationTest {
     }
 
     @Test
-    @WithMockUser
-    void getAll_ShouldReturnAllRecipesWithMockUser() throws Exception {
+    @DirtiesContext
+    void getRecipe_ShouldReturnAllRecipeAdded() throws Exception {
+        Recipe recipe = new Recipe("666", "Evil Food", "Burn in Hell");
+        recipeRepoInterface.save(recipe);
+        Recipe recipe2 = new Recipe("333", "Half Evil Food", "Burn in Hell Medium");
+        recipeRepoInterface.save(recipe2);
+
         mockMvc.perform(get("/api/recipes"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
-                                []
+                                [
+                                {
+                                "id": "666",
+                                "name": "Evil Food",
+                                "description": "Burn in Hell"
+                                },
+                                {
+                                "id": "333",
+                                "name": "Half Evil Food",
+                                "description": "Burn in Hell Medium"
+                                }
+                                ]
                                 """
                 ));
     }
 
     @Test
-    void expect401_OnGet_whenAnonymousUser() throws Exception {
-        mockMvc.perform(get("http://localhost:8080/api/recipes/add"))
-                .andExpect(status().isUnauthorized());
+    @DirtiesContext
+    void addRecipe_shouldReturnaddedRecipe() throws Exception {
+        mockMvc.perform(post("/api/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "0815",
+                                "name": "Völlig Egal Essen",
+                                "description": "Hauptsache etwas im Magen"
+                                }
+                                """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
+    void getRecipeById_ShouldReturnRecipeWithId() throws Exception {
+        Recipe recipe = new Recipe("123", "Hamburger", "Muss gegrillt werden");
+        recipeRepoInterface.save(recipe);
+
+        mockMvc.perform(get("/api/recipes/123"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                    {
+                                    "id": "123",
+                                    "name": "Hamburger",
+                                    "description": "Muss gegrillt werden"
+                                }
+                                    """
+                ));
+    }
+    
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_shouldReturnEditedRecipe() throws Exception {
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                        ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                "id": "1234",
+                                "name": "Oaklahoma-Burger",
+                                "description": "Müssen Zwiebeln drauf"
+                                }
+                                """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
+    void editRecipe_ById_shouldReturnBadRequest() throws Exception {
+        mockMvc.perform(put("/api/recipes/1234/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id": "12",
+                                "name": "BadRequest-Burger",
+                                "description": "id stimmt nicht mit id in url überein muss Status 400 > BadRequest kommen"
+                                }
+                                """
+                        ))
+                .andExpect(status().isBadRequest());
     }
 
     @DirtiesContext
     @Test
-    @WithMockUser
-    void expectSuccessfulPost() throws Exception {
-        String actual = mockMvc.perform(
-                        post("http://localhost:8080/api/recipes/add")
+        void expectSuccessfulDelete() throws Exception {
+        String saveResult = mockMvc.perform(
+                        post("http://localhost:8080/api/recipes")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
-                                        {"id": "111","name":"Curry","description":"Braten"}
+                                        {"description":"Nächsten Endpunkt implementieren","status":"OPEN"}
                                         """)
-                                .with(csrf())
+
                 )
-                .andExpect(status().isOk())
-                .andExpect(content().json("""
-                           {
-                           "id": "111",
-                           "name": "Curry",
-                           "description": "Braten"
-                           }
-                           """))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
-        Recipe actualTodo = objectMapper.readValue(actual, Recipe.class);
-        assertThat(actualTodo.id())
-                .isNotBlank();
+        Recipe saveResultRecipe = objectMapper.readValue(saveResult, Recipe.class);
+        String id = saveResultRecipe.id();
+
+        mockMvc.perform(delete("http://localhost:8080/api/recipes/" + id)
+                        )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("http://localhost:8080/api/recipes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
     }
 }
 

@@ -1,7 +1,5 @@
-package de.neuefische.gruppe1.backend;
+package de.neuefische.gruppe1.backend.recipe;
 
-import de.neuefische.gruppe1.backend.model.Recipe;
-import de.neuefische.gruppe1.backend.model.RecipeRepoInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +19,15 @@ public class RecipeService {
         return recipeRepoInterface.save(recipe);
     }
 
+    public Recipe getRecipeById(String id) {
+        return recipeRepoInterface.findById(id).orElseThrow();
+    }
+
+    public Recipe editRecipe(Recipe recipeToEdit) {
+        return recipeRepoInterface.save(recipeToEdit);
+    }
+
+    public void deleteRecipe(String id){
+        recipeRepoInterface.deleteById(id);
+    }
 }

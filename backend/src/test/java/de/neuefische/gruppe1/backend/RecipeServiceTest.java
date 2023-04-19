@@ -1,7 +1,8 @@
 package de.neuefische.gruppe1.backend;
 
-import de.neuefische.gruppe1.backend.model.Recipe;
-import de.neuefische.gruppe1.backend.model.RecipeRepoInterface;
+import de.neuefische.gruppe1.backend.recipe.Recipe;
+import de.neuefische.gruppe1.backend.recipe.RecipeRepoInterface;
+import de.neuefische.gruppe1.backend.recipe.RecipeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +12,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
@@ -35,9 +33,9 @@ class RecipeServiceTest {
 
     @Test
     void testGetAll() {
-        Recipe recipe1 = new Recipe("1", "Pasta Carbonara","");
-        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese","");
-        Recipe recipe3 = new Recipe("3", "Lasagne","");
+        Recipe recipe1 = new Recipe("1", "Pasta Carbonara", "");
+        Recipe recipe2 = new Recipe("2", "Spaghetti Bolognese", "");
+        Recipe recipe3 = new Recipe("3", "Lasagne", "");
 
         List<Recipe> expectedRecipes = Arrays.asList(recipe1, recipe2, recipe3);
 
@@ -74,12 +72,12 @@ class RecipeServiceTest {
 
     @DirtiesContext
     @Test
-    void addRecipe() {
+    void addRecipe_ShouldRespondAddedRecipe_WhenRecipeAdded() {
         //GIVEN
         final RecipeRepoInterface recipeRepoInterface = mock(RecipeRepoInterface.class);
         final RecipeService recipeService = new RecipeService(recipeRepoInterface);
 
-        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi","");
+        Recipe pizzaFunghi = new Recipe("1", "Pizza Funghi", "");
         when(recipeRepoInterface.save(pizzaFunghi))
                 .thenReturn(pizzaFunghi);
 
@@ -90,4 +88,71 @@ class RecipeServiceTest {
         verify(recipeRepoInterface).save(pizzaFunghi);
         assertEquals(actual, pizzaFunghi);
     }
+
+    @DirtiesContext
+    @Test
+    void getRecipeById_ShouldReturnOneRecipe_WhenOneRecipeIsAdded() {
+        //GIVEN
+        Recipe recipe1 = new Recipe("1", "Futter", "Musste Kochen");
+
+        when(recipeRepoInterfaceMock.findById("1")).thenReturn(Optional.of(recipe1));
+
+        //WHEN
+        Recipe actual = recipeService.getRecipeById("1");
+
+        //THEN
+        Recipe expected = new Recipe("1", "Futter", "Musste Kochen");
+        verify(recipeRepoInterfaceMock).findById("1");
+        assertEquals(expected, actual);
+    }
+
+    @DirtiesContext
+    @Test
+    void getRecipeById_ShouldReturnException_WhenRecipeDoesNotExist() {
+        //GIVEN
+        when(recipeRepoInterfaceMock.findById("1")).thenThrow(NoSuchElementException.class);
+
+        //WHEN
+        try {
+            recipeService.getRecipeById("1");
+            fail();
+        }
+        //THEN
+        catch (NoSuchElementException Ignored) {
+            verify(recipeRepoInterfaceMock).findById("1");
+        }
+        //Alternative zu When-Then
+        //Assertions.assertThrows(NoSuchElementException.class, () -> recipeService.getRecipeById("1"));
+    }
+
+    @DirtiesContext
+    @Test
+    void editRecipe_ShouldReturnEditedRecipe_WhenValidIdProvided() {
+        // GIVEN
+        Recipe updatedRecipe = new Recipe("1", "Maultaschen gebraten", "Braten und Schneiden");
+
+        when(recipeRepoInterfaceMock.save(updatedRecipe)).thenReturn(updatedRecipe);
+
+        // WHEN
+        Recipe actual = recipeService.editRecipe(updatedRecipe);
+
+        // THEN
+        verify(recipeRepoInterfaceMock).save(updatedRecipe);
+        assertEquals(updatedRecipe, actual);
+    }
+
+    @DirtiesContext
+    @Test
+    void deleteRecipeById_shouldDeleteRecipeById(){
+        //GIVEN
+        Recipe recipeToDelete = new Recipe ("1", "Rezept löschen", "schnell löschen");
+        recipeRepoInterfaceMock.save(recipeToDelete);
+
+        //WHEN
+        recipeService.deleteRecipe("1");
+
+        //THEN
+        verify(recipeRepoInterfaceMock).deleteById("1");
+    }
+
 }
