@@ -53,6 +53,7 @@ export default function useDetail() {
             .then((response) => {
                 setRecipe(response.data);
                 setEditing(false);
+                window.location.reload();
                 toast.success("Recipe updated successfully");
             })
             .catch((error) => {
