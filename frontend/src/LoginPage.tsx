@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     onLogin: (username: string, password: string) => Promise<void>

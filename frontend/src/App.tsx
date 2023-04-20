@@ -14,8 +14,6 @@ function App() {
     const {recipes, addRecipe, deleteRecipe} = useRecipes()
     const {user, login} = useUser()
 
-
-
     return (
         <BrowserRouter>
             <div className="App">
