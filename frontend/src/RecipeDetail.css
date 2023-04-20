@@ -1,4 +1,4 @@
-.recipe-card{
+.recipe-detail {
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px seashell solid;
     margin: 50px;
@@ -6,3 +6,4 @@
     padding: 10px;
     color: white;
 }
+
