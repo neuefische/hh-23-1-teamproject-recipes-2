@@ -2,7 +2,6 @@ import {Link, NavLink} from "react-router-dom";
 import './Header.css'
 
 export default function Header() {
-
     return (
         <div className="header">
             <h1>Just eat it.</h1>
@@ -10,7 +9,6 @@ export default function Header() {
                 it doesn't matter who's wrong or right, just eat it, eat it"</p>
             <Link to="/recipes">Zu den Rezepten</Link><br/>
             <NavLink to="/recipes/add">Rezept erstellen</NavLink><br/>
-            <NavLink to="/login">Login</NavLink><br/>
         </div>
     )
 }
