@@ -23,7 +23,7 @@ export default function useRecipes() {
     }
 
     function addRecipe(newRecipe: NewRecipe) {
-        axios.post("/api/recipes", newRecipe)
+        axios.post("/api/recipes/add", newRecipe)
             .then(() => loadAllRecipes())
             .catch(() => console.error("post on /api/recipes not successful"))
     }
